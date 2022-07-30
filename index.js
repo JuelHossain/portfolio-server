@@ -1,6 +1,10 @@
 const express = require('express');
+const { errorHandler, notFoundHandler } =require( './middlewares/errorHandler');
 const {connect} = require('mongoose');
 const cors = require('cors');
+const projectsRouter = require('./router/projectsRouter');
+const skillsRouter = require('./router/skillsRouter');
+const adminRouter = require('./router/adminRouter');
 require('dotenv').config();
 
 const app = express();
@@ -15,11 +19,16 @@ app.use(express.json());
     } catch (err) {
         console.log(err);
     }
-})()
+})();
+
+// routers 
+app.use('/projects', projectsRouter);
+app.use('/skills', skillsRouter);
+app.use('/admin',adminRouter)
 
 
-
-
+app.use(notFoundHandler);
+app.use(errorHandler);
 app.listen(process.env.PORT, () => {
     console.log('app listening on port', process.env.PORT);
-})
+});
