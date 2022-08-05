@@ -4,8 +4,8 @@
   "description": "This is the server side of my portfolio website",
   "main": "index.js",
   "scripts": {
-    "start": "node start",
-    "dev":"nodemon start",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

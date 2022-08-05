@@ -9,6 +9,7 @@ const aboutRouter = require("./router/aboutRouter");
 require("dotenv").config();
 
 const app = express();
+const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
@@ -30,6 +31,6 @@ app.use("/about", aboutRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
-app.listen(process.env.PORT, () => {
-  console.log("app listening on port", process.env.PORT);
+app.listen(port, () => {
+  console.log("app listening on port", port);
 });
