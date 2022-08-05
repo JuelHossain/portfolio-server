@@ -5,8 +5,12 @@ const notFoundHandler = (req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-  res.send(err);
-  next(err);
+  if (!req.timeout) {
+    res.send(err);
+    next();
+  } else {
+    next(err);
+  }
 };
 
 module.exports = { notFoundHandler, errorHandler };
