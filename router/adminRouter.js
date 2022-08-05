@@ -2,6 +2,7 @@ const express = require("express");
 const Admin = require("../model/adminModel");
 const bcrypt = require("bcrypt");
 const AdminStatus = require("../model/adminStatusModel");
+const createHttpError = require("http-errors");
 require("dotenv").config();
 const adminRouter = express.Router();
 const secret = process.env.SECRET;
@@ -11,9 +12,7 @@ adminRouter
     if (req.headers.secret === "true") {
       next();
     } else {
-      res.status(500).json({
-        message: "unauthorized access",
-      });
+      res.send(createHttpError(440, "unauthorized access"));
     }
   })
   .get(async (req, res) => {
@@ -30,7 +29,7 @@ adminRouter
         res.json({ admin });
       }
     } catch (err) {
-      res.status(500).json(err);
+      res.status(440).json("something wrong happened");
     }
   })
   .post(async (req, res) => {
@@ -41,20 +40,20 @@ adminRouter
       const result = await newAdmin.save();
       res.send(result);
     } catch (err) {
-      res.status(500).send("something went wrong");
+      res.status(440).send("something went wrong");
     }
   })
   .put(async (req, res) => {
     try {
       console.log("Changing admin status");
-      const {admin} = await Admin.findOneAndUpdate(
+      const { admin } = await Admin.findOneAndUpdate(
         { secret },
         { $set: req.body },
         { new: true }
       );
-      res.send({admin});
+      res.send({ admin });
     } catch (err) {
-      res.send(err);
+      res.status(440).send("something wrong happened");
     }
   });
 
