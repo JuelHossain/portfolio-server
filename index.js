@@ -6,6 +6,7 @@ const projectsRouter = require("./router/projectsRouter");
 const skillsRouter = require("./router/skillsRouter");
 const adminRouter = require("./router/adminRouter");
 const aboutRouter = require("./router/aboutRouter");
+const homeRouter = require("./router/homeRouter");
 require("dotenv").config();
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.json());
 })();
 
 // routers
+app.use("/", homeRouter);
 app.use("/projects", projectsRouter);
 app.use("/skills", skillsRouter);
 app.use("/admin", adminRouter);
